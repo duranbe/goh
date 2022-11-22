@@ -3,7 +3,7 @@ import './App.css';
 export default function App() {
   return (
     <div className="App">
-      <div className='text-white mx-8'>
+      <div className='text-white mx-8 my-2'>
         I’m Derek, an astro-engineer based in Tattooine. I like to build X-Wings at
         <span className="underline decoration-sky-500"> My Company, Inc</span>.
         Outside of work, I like to <span className="underline decoration-pink-500">watch
