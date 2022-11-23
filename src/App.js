@@ -1,6 +1,10 @@
 import './App.css';
+import { useState } from 'react';
 
 export default function App() {
+
+  const [data, setData] = useState({ words:[]});
+
 
   function handleMouseUp() {
     const eleme = window.getSelection().getRangeAt(0).cloneContents().children;
@@ -13,7 +17,11 @@ export default function App() {
       const singleTokenId = window.getSelection().getRangeAt(0).startContainer.parentNode.id;
       var singleToken = document.getElementById(singleTokenId);
       singleToken.className = "px-0.5 underline decoration-sky-500 font-mono";
+      
+      setData({...data, words: data.words.concat([singleTokenId])})
+      
     }
+    
   }
 
   let text = "I’m Derek, an astro-engineer based in Tattooine. I like to build X-Wings at My Company, Inc."
@@ -25,6 +33,9 @@ export default function App() {
           <span key={index} id={index} className="px-0.5 font-mono" >{token}</span>
         ))
         }
+      </div>
+      <div className='text-white mx-8 my-2'>
+        {data.words.map((val) => (<span>{val}</span>)) }
       </div>
     </div>
   );
