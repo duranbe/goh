@@ -14,7 +14,7 @@ export default function App() {
       let tokenArray = []
       for (var i = 0; i < eleme.length; i++) {
         let token = document.getElementById(eleme[i].id);
-        token.className = "px-0.5 underline decoration-sky-500 font-mono";
+        token.className = "px-0.5 underline decoration-sky-500 font-mono underline-offset-4 decoration-2";
         tokenArray.push(token)
       }
       
@@ -23,8 +23,7 @@ export default function App() {
     } else {
       const singleTokenId = window.getSelection().getRangeAt(0).startContainer.parentNode.id;
       var singleToken = document.getElementById(singleTokenId);
-      singleToken.className = "px-0.5 underline decoration-sky-500 font-mono";
-
+      singleToken.className = "px-0.5 underline decoration-sky-500 font-mono underline-offset-4 decoration-2";
       setData({ ...data, words: data.words.concat([singleToken]) })
 
     }
@@ -35,7 +34,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <div className='text-white mx-8 my-2' onMouseUp={handleMouseUp}>
+      <div className='text-white mx-8 my-2 text-lg' onMouseUp={handleMouseUp}>
         {text.split(" ").map((token, index) => (
           <span key={index} id={index} className="px-0.5 font-mono" >{token}</span>
         ))
