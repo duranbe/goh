@@ -1,5 +1,6 @@
 import './App.css';
 import { useState } from 'react';
+import Token from './components/Token';
 
 export default function App() {
 
@@ -27,10 +28,19 @@ export default function App() {
       setData({ ...data, words: data.words.concat([singleToken]) })
 
     }
-
   }
 
-  let text = "I’m Derek, an astro-engineer based in Tattooine. I like to build X-Wings at My Company, Inc."
+  let text = "I'm Derek, an astro-engineer based in Tattooine. I like to build X-Wings at My Company, Inc."
+  let textSplit = text.split(" ");
+
+  let tokenArray = [];
+  var startIndex = 0;
+  for(let i = 0;i<textSplit.length;i++){
+    tokenArray.push(new Token(startIndex,startIndex+textSplit[i].length,textSplit[i],))
+    startIndex = startIndex+textSplit[i].length+1
+  }
+
+  console.log(tokenArray)
 
   return (
     <div className="App">
@@ -46,3 +56,5 @@ export default function App() {
     </div>
   );
 }
+
+
