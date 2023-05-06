@@ -1,17 +1,12 @@
 import './App.css';
 import { useState } from 'react';
 import { Token } from './components/Token';
-import React from 'react';
 
 export default function App() {
 
-  const [data, setData] = useState<Token[]>([]);
+  const [selectedToken, setSelectedToken] = useState<Token[]>([]);
   const tokenIdMap = new Map<number, Token>();
-
-  function tokenAlreadyinData(token: Token) {
-    return data.some((item: Token) => item.id === token.id)
-  }
-
+  const tokenAlreadyinData = (token: Token) => { return selectedToken.some((item: Token) => item.id === token.id)}
 
   function handleMouseUp() {
 
@@ -53,7 +48,7 @@ export default function App() {
 
     }
 
-    setData(data.concat(tokenArray));
+    setSelectedToken(selectedToken.concat(tokenArray));
   }
 
   let text = "I'm Derek, an astro-engineer based in Tattooine. I like to build X-Wings at My Company, Inc."
@@ -80,7 +75,7 @@ export default function App() {
     </div>
 
     <div className='text-white mx-8 my-2' >
-      {data.map((val) => (<span key={val.id}>{val.tokenValue} </span>))}
+      {selectedToken.map((val) => (<span key={val.id}>{val.tokenValue} </span>))}
     </div>
 
   </div>
