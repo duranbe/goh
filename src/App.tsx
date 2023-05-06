@@ -39,6 +39,7 @@ export default function App() {
 
     } else if (eleme) {
       const parentNode = window.getSelection()?.getRangeAt(0)?.startContainer?.parentNode
+      //@ts-ignore
       const singleTokenId = parentNode?.id;
       var singleToken = document.getElementById(singleTokenId);
       if (singleToken) {
@@ -74,21 +75,14 @@ export default function App() {
     startIndex = startIndex + textSplit[i].length + 1
   }
 
-  return (<div className="App" >Test
-    <div className='text-white mx-8 my-2 text-lg' onMouseUp={handleMouseUp} >
-      {
-        text.split(" ").map((token, index) => (
-          <span key={index} id={String(index)} className="px-0.5 font-mono" > {token} </span>
-        ))
-      }
+  return (
+  <div className="App">
+    <div className='text-white mx-12 my-2 text-lg' onMouseUp={handleMouseUp} >
+      {text.split(" ").map((token, index) => (<span key={index} id={String(index)} className="px-0.5 font-mono" >{token}</span>))}
     </div>
 
     <div className='text-white mx-8 my-2' >
-      {
-        data.map((val) => (
-          <span key={val.id} > {val.tokenValue} </span>
-        ))
-      }
+      {data.map((val) => (<span key={val.id}>{val.tokenValue} </span>))}
     </div>
 
   </div>
