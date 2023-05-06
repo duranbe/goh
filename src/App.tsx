@@ -9,9 +9,7 @@ export default function App() {
   const tokenIdMap = new Map<number, Token>();
 
   function tokenAlreadyinData(token: Token) {
-    const check = (item: Token) => item.id === token.id;
-    return data.some(check)
-
+    return data.some((item: Token) => item.id === token.id)
   }
 
 
