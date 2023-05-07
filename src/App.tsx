@@ -7,6 +7,15 @@ export default function App() {
   const [selectedToken, setSelectedToken] = useState<Token[]>([]);
   const tokenIdMap = new Map<number, Token>();
   const tokenAlreadyinData = (token: Token) => { return selectedToken.some((item: Token) => item.id === token.id)}
+  const csvFileHeaders = "id,tokenStartIndex,tokenEndIndex,value\n"
+
+  const download = () => {
+    let csvFileContent = selectedToken.map((token)=>{ return token.toCSVFormat()}).join("")
+    const csvContent = `data:text/csv;charset=utf-8,${csvFileHeaders}${csvFileContent}`;
+    const encodedURI = encodeURI(csvContent);
+    window.open(encodedURI);
+  };
+
 
   function handleMouseUp() {
 
@@ -57,12 +66,7 @@ export default function App() {
   let tokenArray: Token[] = [];
   var startIndex = 0;
   for (let i = 0; i < textSplit.length; i++) {
-    let newToken = {
-      startIndex: startIndex,
-      endIndex: startIndex + textSplit[i].length,
-      tokenValue: textSplit[i],
-      id: i
-    }
+    let newToken = new Token(startIndex,startIndex + textSplit[i].length,textSplit[i],i)
     tokenArray.push(newToken)
     tokenIdMap.set(i, newToken)
     startIndex = startIndex + textSplit[i].length + 1
@@ -77,6 +81,9 @@ export default function App() {
     <div className='text-white mx-8 my-2' >
       {selectedToken.map((val) => (<span key={val.id}>{val.tokenValue} </span>))}
     </div>
+
+    <button className='text-white bg-blue-500' onClick={download}>Download</button>
+
 
   </div>
 
