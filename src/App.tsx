@@ -77,7 +77,7 @@ export default function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App px-4 py-2">
       <div className="text-white mx-12 my-2 text-lg" onMouseUp={handleMouseUp}>
         {text.split(" ").map((token, index) => (
           <span key={index} id={String(index)} className="px-0.5 font-mono">
@@ -88,16 +88,20 @@ export default function App() {
 
       <div className="text-white mx-8 my-2">
         {selectedToken.map((val) => (
-          <span key={val.id}>{val.tokenValue} </span>
+          <span className="px-1" key={val.id}>
+            {val.tokenValue}
+          </span>
         ))}
       </div>
 
-      <button
-        className="text-white bg-blue-500 px-4 py-2 rounded-sm"
-        onClick={download}
-      >
-        Download
-      </button>
+      <div className="flex justify-end px-4">
+        <button
+          className="text-white bg-blue-500 px-4 py-2 rounded-md"
+          onClick={download}
+        >
+          Download
+        </button>
+      </div>
     </div>
   );
 }
