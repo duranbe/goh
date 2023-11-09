@@ -24,7 +24,7 @@ export class Token implements TokenInterface {
     this.id = id;
   }
 
-  toCSVFormat() {
+  toCSVFormat(): string {
     return String(
       `${this.id},${this.startIndex},${this.endIndex},${this.tokenValue}\n`
     );

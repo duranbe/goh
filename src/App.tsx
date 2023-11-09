@@ -1,14 +1,16 @@
 import "./App.css";
 import { useState } from "react";
 import { Token } from "./components/Token";
+import { stringToTokens } from "./components/TokenUtils";
 
 export default function App() {
   const [selectedToken, setSelectedToken] = useState<Token[]>([]);
-  const tokenIdMap = new Map<number, Token>();
+  const text = "I'm Derek, an astro-engineer based in Tattooine. I like to build X-Wings at My Company, Inc.";
+  const csvFileHeaders = "id,tokenStartIndex,tokenEndIndex,value\n";
+  const tokenIdMap = stringToTokens(text)
   const tokenAlreadyinData = (token: Token) => {
     return selectedToken.some((item: Token) => item.id === token.id);
   };
-  const csvFileHeaders = "id,tokenStartIndex,tokenEndIndex,value\n";
 
   const download = () => {
     let csvFileContent = selectedToken
@@ -56,24 +58,6 @@ export default function App() {
     }
 
     setSelectedToken(selectedToken.concat(tokenArray));
-  }
-
-  let text =
-    "I'm Derek, an astro-engineer based in Tattooine. I like to build X-Wings at My Company, Inc.";
-  let textSplit = text.split(" ");
-
-  let tokenArray: Token[] = [];
-  var startIndex = 0;
-  for (let i = 0; i < textSplit.length; i++) {
-    let newToken: Token = new Token(
-      startIndex,
-      startIndex + textSplit[i].length,
-      textSplit[i],
-      i
-    );
-    tokenArray.push(newToken);
-    tokenIdMap.set(i, newToken);
-    startIndex = startIndex + textSplit[i].length + 1;
   }
 
   return (
