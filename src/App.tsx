@@ -65,7 +65,7 @@ export default function App() {
   let tokenArray: Token[] = [];
   var startIndex = 0;
   for (let i = 0; i < textSplit.length; i++) {
-    let newToken = new Token(
+    let newToken: Token = new Token(
       startIndex,
       startIndex + textSplit[i].length,
       textSplit[i],
