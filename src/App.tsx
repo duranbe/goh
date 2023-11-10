@@ -33,11 +33,11 @@ export default function App() {
       for (var i = 0; i < eleme.length; i++) {
         let token = document.getElementById(eleme[i].id);
         if (token && token.id) {
-          token.className = tokenClassName;
           let t = Number(token.id);
           let v = tokenIdMap.get(t);
           if (v && !tokenAlreadyinData(v)) {
             tokenArray.push(v);
+            token.className = tokenClassName;
           }
         }
       }
@@ -48,11 +48,11 @@ export default function App() {
       const singleTokenId = parentNode?.id;
       var singleToken = document.getElementById(singleTokenId);
       if (singleToken) {
-        singleToken.className = tokenClassName;
         let t = Number(singleToken.id);
         let v = tokenIdMap.get(t);
         if (v && !tokenAlreadyinData(v)) {
           tokenArray.push(v);
+          singleToken.className = tokenClassName;
         }
       }
     }
