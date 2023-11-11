@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
-import { Token } from "./components/Token";
-import { stringToTokens } from "./components/TokenUtils";
+import { Token } from "./components/Token/Token";
+import { stringToTokens } from "./components/Token/TokenUtils";
 
 export default function App() {
   const [selectedToken, setSelectedToken] = useState<Token[]>([]);
@@ -26,9 +26,7 @@ export default function App() {
   function handleMouseUp() {
     const eleme = window.getSelection()?.getRangeAt(0).cloneContents().children;
     let tokenArray: Token[] = [];
-    const tokenClassName =
-      "px-0.5 underline decoration-sky-500 font-mono underline-offset-4 decoration-2";
-
+    const tokenClassName = "px-0.5 underline decoration-sky-500 font-mono underline-offset-4 decoration-2";
     if (eleme && eleme.length > 0) {
       for (var i = 0; i < eleme.length; i++) {
         let token = document.getElementById(eleme[i].id);
@@ -41,6 +39,7 @@ export default function App() {
           }
         }
       }
+      setSelectedToken(selectedToken.concat(tokenArray));
     } else if (eleme) {
       const parentNode = window.getSelection()?.getRangeAt(0)
         ?.startContainer?.parentNode;
@@ -53,11 +52,15 @@ export default function App() {
         if (v && !tokenAlreadyinData(v)) {
           tokenArray.push(v);
           singleToken.className = tokenClassName;
+          setSelectedToken(selectedToken.concat(tokenArray));
+        } else if(v){
+          setSelectedToken(selectedToken.filter(token => token.id !== v.id));
+          singleToken.className = "px-0.5 font-mono";
         }
       }
     }
 
-    setSelectedToken(selectedToken.concat(tokenArray));
+    
   }
 
   return (
