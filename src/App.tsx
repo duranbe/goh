@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import { Token } from "./components/Token/Token";
+import { Token, TokenComponent } from "./components/Token/Token";
 import { stringToTokens } from "./components/Token/TokenUtils";
 
 export default function App() {
@@ -66,7 +66,10 @@ export default function App() {
   return (
     <div className="App px-4 py-2">
       <div className="text-white mx-4 my-2">Input</div>
-      <div className="bg-slate-800 rounded-lg px-4 py-2 m-4 text-white text-lg" onMouseUp={handleMouseUp}>
+      <div
+        className="bg-slate-800 rounded-lg px-4 py-2 m-4 text-white text-lg"
+        onMouseUp={handleMouseUp}
+      >
         {text.split(" ").map((token, index) => (
           <span key={index} id={String(index)} className="px-0.5 font-mono">
             {token}
@@ -75,11 +78,13 @@ export default function App() {
       </div>
       <div className="text-white mx-4 my-2">Selected Tokens</div>
       <div className="rounded-lg m-4 text-white text-md">
-        {selectedToken.sort((a,b)=> a.id-b.id).map((val) => (
-          <span className="rounded-full px-2 mx-1 align-middle bg-blue-600 hover:bg-blue-900" key={val.id}>
-            {val.tokenValue}
-          </span>
-        ))}
+        {selectedToken
+          .sort((a, b) => a.id - b.id)
+          .map((val) => (
+            <span>
+              <TokenComponent token={val} />
+            </span>
+          ))}
       </div>
 
       <div className="flex justify-end px-4">
