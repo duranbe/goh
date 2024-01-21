@@ -4,11 +4,12 @@ import { Token, TokenComponent } from "./components/Token/Token";
 import { stringToTokens } from "./components/Token/TokenUtils";
 
 export default function App() {
+  const sampleText = "This is a sample text, upload a txt file to get started.";
   const [selectedToken, setSelectedToken] = useState<Token[]>([]);
-  const text =
-    "I'm Derek, an astro-engineer based in Tattooine. I like to build X-Wings at My Company, Inc.";
+  const [text, setText] = useState<string>(sampleText);
+
   const csvFileHeaders = "id,tokenStartIndex,tokenEndIndex,value\n";
-  const tokenIdMap = stringToTokens(text);
+  var tokenIdMap = stringToTokens(text);
   const tokenAlreadyinData = (token: Token) => {
     return selectedToken.some((item: Token) => item.id === token.id);
   };
@@ -33,8 +34,7 @@ export default function App() {
       for (var i = 0; i < eleme.length; i++) {
         let token = document.getElementById(eleme[i].id);
         if (token && token.id) {
-          let t = Number(token.id);
-          let v = tokenIdMap.get(t);
+          let v = tokenIdMap.get(Number(token.id));
           if (v && !tokenAlreadyinData(v)) {
             tokenArray.push(v);
             token.className = tokenClassName;
@@ -49,8 +49,7 @@ export default function App() {
       const singleTokenId = parentNode?.id;
       var singleToken = document.getElementById(singleTokenId);
       if (singleToken) {
-        let t = Number(singleToken.id);
-        let v = tokenIdMap.get(t);
+        let v = tokenIdMap.get(Number(singleToken.id));
         if (v && !tokenAlreadyinData(v)) {
           tokenArray.push(v);
           singleToken.className = tokenClassName;
@@ -63,9 +62,46 @@ export default function App() {
     }
   }
 
+  function onFileUpload() {
+    var file = document.getElementById("file_input").files[0];
+    if (!file) return;
+    var textType = /text.*/;
+
+    if (file.type.match(textType)) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        var content: string = reader.result;
+        if (content != null) {
+          setText(content);
+          stringToTokens(content)
+        }
+      };
+
+      reader.readAsText(file);
+    }
+  }
+
   return (
     <div className="App px-4 py-2">
-      <div className="text-white mx-4 my-2">Input</div>
+      <div className="text-white mx-4 my-2">
+        Input
+        <div className="mx-2 my-2">
+          <label
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            htmlFor="file_input"
+          >
+            Upload file
+          </label>
+          <input
+            className="block text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            id="file_input"
+            type="file" 
+            onChange={onFileUpload}
+          ></input>
+        </div>
+      </div>
+
       <div
         className="bg-slate-800 rounded-lg px-4 py-2 m-4 text-white text-lg"
         onMouseUp={handleMouseUp}
