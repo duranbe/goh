@@ -1,5 +1,5 @@
 # goh
-Named Entity Recognition annotation tool in React/Tailwind
+Yet another in browser Named Entity Recognition annotation tool
 
 ## Run
 Start dev server
