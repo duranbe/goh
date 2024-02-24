@@ -2,27 +2,16 @@ import "./App.css";
 import { useState } from "react";
 import { Token, TokenComponent } from "./components/Token/Token";
 import { stringToTokens } from "./components/Token/TokenUtils";
+import { DownloadComponent } from "./components/Download";
 
 export default function App() {
   const sampleText = "This is a sample text, upload a txt file to get started.";
   const [selectedToken, setSelectedToken] = useState<Token[]>([]);
   const [text, setText] = useState<string>(sampleText);
 
-  const csvFileHeaders = "id,tokenStartIndex,tokenEndIndex,value\n";
   var tokenIdMap = stringToTokens(text);
   const tokenAlreadyinData = (token: Token) => {
     return selectedToken.some((item: Token) => item.id === token.id);
-  };
-
-  const download = () => {
-    let csvFileContent = selectedToken
-      .map((token) => {
-        return token.toCSVFormat();
-      })
-      .join("");
-    const csvContent = `data:text/csv;charset=utf-8,${csvFileHeaders}${csvFileContent}`;
-    const encodedURI = encodeURI(csvContent);
-    window.open(encodedURI);
   };
 
   function handleMouseUp() {
@@ -63,18 +52,19 @@ export default function App() {
   }
 
   function onFileUpload() {
-    var file = document.getElementById("file_input").files[0];
-    if (!file) return;
+    var inputElement = document.getElementById("file_input") as HTMLInputElement;
+    if(!inputElement || !inputElement.files) return ;
+    var file = inputElement.files[0];
     var textType = /text.*/;
 
     if (file.type.match(textType)) {
       var reader = new FileReader();
 
       reader.onload = function (e) {
-        var content: string = reader.result;
-        if (content != null) {
+        var content = reader.result as string;
+        if (content) {
           setText(content);
-          stringToTokens(content)
+          stringToTokens(content);
         }
       };
 
@@ -96,7 +86,7 @@ export default function App() {
           <input
             className="block text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             id="file_input"
-            type="file" 
+            type="file"
             onChange={onFileUpload}
           ></input>
         </div>
@@ -122,15 +112,7 @@ export default function App() {
             </span>
           ))}
       </div>
-
-      <div className="flex justify-end px-4">
-        <button
-          className="text-white bg-blue-500 px-4 py-2 rounded-md"
-          onClick={download}
-        >
-          Download
-        </button>
-      </div>
+      <DownloadComponent content={selectedToken} />
     </div>
   );
 }
