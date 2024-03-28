@@ -15,23 +15,29 @@ export default function App() {
   };
 
   function handleMouseUp() {
-    const eleme = window.getSelection()?.getRangeAt(0).cloneContents().children;
+    const selectedElements = window.getSelection()?.getRangeAt(0).cloneContents().children;
     let tokenArray: Token[] = [];
     const tokenClassName =
       "px-0.5 underline decoration-sky-500 font-mono underline-offset-4 decoration-2";
-    if (eleme && eleme.length > 0) {
-      for (var i = 0; i < eleme.length; i++) {
-        let token = document.getElementById(eleme[i].id);
-        if (token && token.id) {
-          let v = tokenIdMap.get(Number(token.id));
-          if (v && !tokenAlreadyinData(v)) {
-            tokenArray.push(v);
-            token.className = tokenClassName;
+    if (selectedElements && selectedElements.length > 0) {
+      Array.from(selectedElements)
+      .map(element => document.getElementById(element.id))
+      .map(token => token && token.id && tokenIdMap.get(Number(token.id)))
+      .filter(token => token && !tokenAlreadyinData(token))
+      .forEach(token => {
+        if(token && token.id){
+          tokenArray.push(token);
+          var elementToUpdate = document.getElementById(String(token.id));
+          if(elementToUpdate){
+            elementToUpdate.className = tokenClassName;
           }
+
         }
-      }
+        
+      })
+
       setSelectedToken(selectedToken.concat(tokenArray));
-    } else if (eleme) {
+    } else if (selectedElements) {
       const parentNode = window.getSelection()?.getRangeAt(0)
         ?.startContainer?.parentNode;
       //@ts-ignore
