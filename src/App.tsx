@@ -2,7 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import { Token, TokenComponent } from "./components/Token/Token";
 import { stringToTokens } from "./components/Token/TokenUtils";
-import { DownloadComponent } from "./components/Download";
+import { DownloadComponent } from "./components/DowloadComponent/Download";
 
 export default function App() {
   const sampleText = "This is a sample text, upload a txt file to get started.";

@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Token } from "./Token/Token";
+import { Token } from "../Token/Token";
 
 export class DownloadComponent extends Component<{ content: Token[] }> {
   render() {
