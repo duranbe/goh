@@ -38,13 +38,13 @@ export default function App() {
       const singleTokenId = parentNode?.id;
       var singleToken = document.getElementById(singleTokenId);
       if (singleToken) {
-        let v = tokenIdMap.get(Number(singleToken.id));
-        if (v && !tokenAlreadyinData(v)) {
-          tokenArray.push(v);
+        let singleTokenFromMap = tokenIdMap.get(Number(singleToken.id));
+        if (singleTokenFromMap && !tokenAlreadyinData(singleTokenFromMap)) {
+          tokenArray.push(singleTokenFromMap);
           singleToken.className = tokenClassName;
           setSelectedToken(selectedToken.concat(tokenArray));
-        } else if (v) {
-          setSelectedToken(selectedToken.filter((token) => token.id !== v.id));
+        } else if (singleTokenFromMap) {
+          setSelectedToken(selectedToken.filter((token) => singleTokenFromMap && token.id !== singleTokenFromMap.id));
           singleToken.className = "px-0.5 font-mono";
         }
       }

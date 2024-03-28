@@ -38,12 +38,12 @@ export class TokenComponent extends Component<{ token: Token }> {
     const val = this.props.token.tokenValue;
     return (
       <span
-        className="rounded-full px-2 mx-1 align-middle
+        className="rounded-full px-2 align-middle m-1
        bg-blue-600
        hover:bg-blue-900"
       >
         {val}
-      </span>
+      </span> 
     );
   }
 }
