@@ -21,20 +21,20 @@ export default function App() {
       "px-0.5 underline decoration-sky-500 font-mono underline-offset-4 decoration-2";
     if (selectedElements && selectedElements.length > 0) {
       Array.from(selectedElements)
-      .map(element => document.getElementById(element.id))
-      .map(token => token && token.id && tokenIdMap.get(Number(token.id)))
-      .filter(token => token && !tokenAlreadyinData(token))
-      .forEach(token => {
-        if(token && token.id){
-          tokenArray.push(token);
-          var elementToUpdate = document.getElementById(String(token.id));
-          if(elementToUpdate){
-            elementToUpdate.className = tokenClassName;
+        .map(element => document.getElementById(element.id))
+        .map(token => token && token.id && tokenIdMap.get(Number(token.id)))
+        .filter(token => token && !tokenAlreadyinData(token))
+        .forEach(token => {
+          if (token && token.id) {
+            tokenArray.push(token);
+            var elementToUpdate = document.getElementById(String(token.id));
+            if (elementToUpdate) {
+              elementToUpdate.className = tokenClassName;
+            }
+
           }
 
-        }
-        
-      })
+        })
 
       setSelectedToken(selectedToken.concat(tokenArray));
     } else if (selectedElements) {
@@ -59,7 +59,7 @@ export default function App() {
 
   function onFileUpload() {
     var inputElement = document.getElementById("file_input") as HTMLInputElement;
-    if(!inputElement || !inputElement.files) return ;
+    if (!inputElement || !inputElement.files) return;
     var file = inputElement.files[0];
     var textType = /text.*/;
 
@@ -68,10 +68,9 @@ export default function App() {
 
       reader.onload = function (e) {
         var content = reader.result as string;
-        if (content) {
-          setText(content);
-          stringToTokens(content);
-        }
+        setText(content);
+        setSelectedToken([]);
+        stringToTokens(content);
       };
 
       reader.readAsText(file);
