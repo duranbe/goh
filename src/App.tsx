@@ -67,10 +67,17 @@ export default function App() {
       var reader = new FileReader();
 
       reader.onload = function (e) {
+        tokenIdMap.forEach((token, tokenId) =>{
+          var element = document.getElementById(String(tokenId));
+          if(element){
+            element.className = "px-0.5 font-mono";
+          }
+        })
         var content = reader.result as string;
         setText(content);
         setSelectedToken([]);
         stringToTokens(content);
+        
       };
 
       reader.readAsText(file);
