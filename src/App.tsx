@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import { Token, TokenComponent } from "./components/Token/Token";
-import { stringToTokens } from "./components/Token/TokenUtils";
+import { wordsToToken } from "./components/Token/TokenUtils";
 import { DownloadComponent } from "./components/DowloadComponent/Download";
 
 export default function App() {
@@ -9,7 +9,7 @@ export default function App() {
   const [selectedToken, setSelectedToken] = useState<Token[]>([]);
   const [text, setText] = useState<string>(sampleText);
 
-  var tokenIdMap = stringToTokens(text);
+  var tokensList = wordsToToken(text);
   const tokenAlreadyinData = (token: Token) => {
     return selectedToken.some((item: Token) => item.id === token.id);
   };
@@ -22,7 +22,7 @@ export default function App() {
     if (selectedElements && selectedElements.length > 0) {
       Array.from(selectedElements)
         .map(element => document.getElementById(element.id))
-        .map(token => token && token.id && tokenIdMap.get(Number(token.id)))
+        .map(token => token && token.id && tokensList.find(t => t.id === token.id))
         .filter(token => token && !tokenAlreadyinData(token))
         .forEach(token => {
           if (token && token.id) {
@@ -44,7 +44,7 @@ export default function App() {
       const singleTokenId = parentNode?.id;
       var singleToken = document.getElementById(singleTokenId);
       if (singleToken) {
-        let singleTokenFromMap = tokenIdMap.get(Number(singleToken.id));
+        let singleTokenFromMap =  tokensList.find(t => singleToken && t.id === singleToken.id);
         if (singleTokenFromMap && !tokenAlreadyinData(singleTokenFromMap)) {
           tokenArray.push(singleTokenFromMap);
           singleToken.className = tokenClassName;
@@ -70,7 +70,6 @@ export default function App() {
         var content = reader.result as string;
         setText(content);
         setSelectedToken([]);
-        stringToTokens(content);
       };
 
       reader.readAsText(file);
@@ -101,16 +100,15 @@ export default function App() {
         className="bg-slate-800 rounded-lg px-4 py-2 m-4 text-white text-lg"
         onMouseUp={handleMouseUp}
       >
-        {text.split(" ").map((token, index) => (
-          <span key={index} id={String(index)} className="px-0.5 font-mono">
-            {token}
+        {tokensList.map((token) => (
+          <span key={token.id} id={token.id} className="px-0.5 font-mono">
+            {token.tokenValue}
           </span>
         ))}
       </div>
       <div className="text-white mx-4 my-2">Selected Tokens</div>
       <div className="rounded-lg m-4 text-white text-md">
         {selectedToken
-          .sort((a, b) => a.id - b.id)
           .map((val) => (
             <span>
               <TokenComponent token={val} />

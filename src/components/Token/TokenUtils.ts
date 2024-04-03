@@ -1,10 +1,12 @@
 import { Token } from "./Token";
 
 
-export function stringToTokens(input: string): Map<number, Token> {
+export function wordsToToken(input: string): Token[] {
 
-    let tokenIdMap = new Map<number, Token>();
-    if (input.length === 0) return tokenIdMap;
+
+    let tokenWordsList: Token[] = [];
+
+    if(input.length === 0 ) return tokenWordsList;
     let textSplit = input.split(" ");
     var startIndex = 0;
     for (let i = 0; i < textSplit.length; i++) {
@@ -13,11 +15,13 @@ export function stringToTokens(input: string): Map<number, Token> {
             startIndex,
             endIndex,
             textSplit[i],
-            i
+            crypto.randomUUID()
         );
-        tokenIdMap.set(i, newToken);
+        
+        tokenWordsList.push(newToken);
         startIndex = endIndex + 1;
     }
-    return tokenIdMap;
-}
 
+    return tokenWordsList;
+
+}

@@ -4,7 +4,7 @@ export interface TokenInterface {
   startIndex: number;
   endIndex: number;
   tokenValue: string;
-  id: number;
+  id: string;
   toCSVFormat: () => string;
 }
 
@@ -12,13 +12,13 @@ export class Token implements TokenInterface {
   startIndex: number;
   endIndex: number;
   tokenValue: string;
-  id: number;
+  id: string;
 
   constructor(
     startIndex: number,
     endIndex: number,
     tokenValue: string,
-    id: number
+    id: string
   ) {
     this.startIndex = startIndex;
     this.endIndex = endIndex;
